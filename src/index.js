@@ -30,6 +30,14 @@ document.addEventListener('DOMContentLoaded', () => {
         show(order);
     })
 
+    the.addEventListener('click', async () => {
+        let response = await fetch ('quotes.json');
+        let result = await response.json();
+
+        orderShow(result.quotes);
+        
+    })
+
     function show(quotes){
         quoteList.textContent = "";
 
@@ -39,5 +47,30 @@ document.addEventListener('DOMContentLoaded', () => {
             quoteList.appendChild(li);
         }
         
+    }
+
+    function orderShow(quotes){
+        let array = [];
+        for (let q of quotes){
+            array.push (q.quote);
+        }
+
+        for (let i = 0; i < array.length; i++){
+            var string = array[i];
+            var substring = "the";
+            var substring2 = "The";
+            string = string.replaceAll(substring, '<b>' + substring + '</b>');
+            string = string.replaceAll(substring2, '<b>' + substring2 + '</b>');
+            array[i] = string;
+
+        }
+
+        orderList.textContent = "";
+
+        for (let i = 0; i < array.length; i++){
+            let li = document.createElement('li');
+            li.innerHTML = array[i] + " " + "<hr>";
+            orderList.appendChild(li);
+        }
     }
 })
