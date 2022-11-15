@@ -45,6 +45,13 @@ document.addEventListener('DOMContentLoaded', () => {
         quantityShow(result.quotes);
     })
 
+    count.addEventListener('click', async () => {
+        let response = await fetch ('quotes.json');
+        let result = await response.json();
+
+        authorShow(result.quotes);
+    })
+
     function show(quotes){
         quoteList.textContent = "";
 
@@ -82,14 +89,28 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function quantityShow(quotes){
-        let array = []
+        let array = [];
         let array2 = [];
         for (let q of quotes) {
-            array.push (q.quote)
+            array.push(q.quote)
         }
         for (let i = 0; i < array.length; i++){
             array2[i] = array[i].length;
         }
         lengthParagraph.append(array2.join(','));
+    }
+
+    function authorShow(quotes){
+        let array = [];
+        let counter = 0;
+        for (let q of quotes){
+            array.push(q.author);
+        }
+        for (let i = 0; i < array.length; i++){
+            if(author.value == array[i]){
+                counter++;
+            }
+        }
+        quantity.value = counter;
     }
 })
