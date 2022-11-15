@@ -38,6 +38,13 @@ document.addEventListener('DOMContentLoaded', () => {
         
     })
 
+    length.addEventListener('click', async () => {
+        let response = await fetch ('quotes.json');
+        let result = await response.json();
+
+        quantityShow(result.quotes);
+    })
+
     function show(quotes){
         quoteList.textContent = "";
 
@@ -72,5 +79,17 @@ document.addEventListener('DOMContentLoaded', () => {
             li.innerHTML = array[i] + " " + "<hr>";
             orderList.appendChild(li);
         }
+    }
+
+    function quantityShow(quotes){
+        let array = []
+        let array2 = [];
+        for (let q of quotes) {
+            array.push (q.quote)
+        }
+        for (let i = 0; i < array.length; i++){
+            array2[i] = array[i].length;
+        }
+        lengthParagraph.append(array2.join(','));
     }
 })
